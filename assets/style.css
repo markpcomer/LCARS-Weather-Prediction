@@ -1,0 +1,40 @@
+/* * {
+    border: solid 1px red;
+} */
+
+
+/* * {
+    border: red solid 1px;
+}
+
+body {
+    background-color: black;
+    font-family: 'Antonio', 'Arial Narrow', 'Avenir Next Condensed', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #cc99ff;
+}
+
+.wrap-everything {
+    width: 100%;
+}
+
+#lcars-container {
+    flex: 1 1 0%;
+}
+
+.left-frame-top {
+    background-color: #8899ff;
+    border-bottom-left-radius: 160px;
+}
+
+left-frame-top, .left-frame {
+    width: 230px;
+    text-align: right;
+    font-size: clamp(.875rem, 2vw, 1rem);
+    line-height: 1.2;
+    font-weight: bold;
+    color: black;
+    transition: width 1s;
+  }
+   */
