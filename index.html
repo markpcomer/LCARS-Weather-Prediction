@@ -7,83 +7,165 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="./assets/style.css">
     </head>
     <body>
         <div id="container" class="container-fluid vh-100 bg-dark text-light">
             <div id="lcars-upper" class="row">
                 <div id="upper-left-panels" class="col-lg-2">
-                    <div id="panel-01">panel-01</div>
-                    <div id="panel-02">panel-02</div>
+                    <!-- <div id="panel-01">
+                        <div id="panel-01-text" class="panel-text">Saved Search</div>
+                    </div>
+                    <div id="panel-02" class="panel-text">
+                        <div id="panel-02-text" class="panel-text">Saved Search</div>
+                    </div> -->
+
+                    <!-- Another attempt at correct border radius -->
+                    <div class="panel-01">01-Saved Search</div>
+                    <div class="panel-02">02-Saved Search</div>
                 </div>
                 <div id="banner" class="col-lg-6 flex-fill text-end">
-                    <h1>Federation Forecast</h1>
+                    <h1>                    <img class="col-lg-2" src="./assets/federation.png" alt="Federation Logo">
+                        LCARS &#149; 47988 </h1>
                     <div id="banner-content" class="row">
                     
-                        <div id="analog-forecast" class="col-md-6 small text">
-                            <ul class="row row-cols-6 text-center m-0 p-0 ">
-                                <li>City</li>
-                                <li>Sun</li>
-                                <li>Hum.</li>
-                                <li>Temp.</li>
-                                <li>Wind</li>
-                                <li>Coord.</li>
+                        <div id="analog-forecast" class="">
+                            <ul class="row-1 row row-cols-6 text-center m-0 p-0 ">
+                                <li class="col-sm-1">City</li>
+                                <li class="col-sm-1">Sun</li>
+                                <li class="col-sm-1">Hum.</li>
+                                <li class="col-sm-1">Temp&deg;F</li>
+                                <li class="col-sm-2">Wind</li>
+                                <li class="col-sm-2">X-Coord.</li>
+                                <li class="col-sm-2">Y-Coord.</li>
+                                <li class="col-sm-2">Air Quality</li>
                             </ul>
-                            <ul class="row row-cols-6 text-center m-0 p-0">
-                                <li>SF</li>
-                                <li>Sun</li>
-                                <li>30%.</li>
-                                <li>78deg</li>
-                                <li>5mph</li>
-                                <li></li>
+                            <ul class="row-2 row row-cols-6 text-center m-0 p-0">
+                                <li class="col-sm-1">SF</li>
+                                <li class="col-sm-1">Sun</li>
+                                <li class="col-sm-1">57%.</li>
+                                <li class="col-sm-1">57&deg;F</li>
+                                <li class="col-sm-2">10mph SE</li>
+                                <li class="col-sm-2">37.7749&deg;N,</li>
+                                <li class="col-sm-2">122.4194&deg;W</li>
+                                <li class="col-sm-2">32AQI Fair</li>
                             </ul>
-                            <ul class="row row-cols-6 text-center m-0 p-0">
-                                <li>TYO</li>
-                                <li>Sun</li>
-                                <li>30%.</li>
-                                <li>78deg</li>
-                                <li>5mph</li>
-                                <li></li>
+                            <ul class="row-3 row row-cols-6 text-center m-0 p-0">
+                                <li class="col-sm-1">TYO</li>
+                                <li class="col-sm-1">Rain</li>
+                                <li class="col-sm-1">60%.</li>
+                                <li class="col-sm-1">58&deg;F</li>
+                                <li class="col-sm-2">4mph N</li>
+                                <li class="col-sm-2">35.6764&deg;N</li>
+                                <li class="col-sm-2">139.6500&deg;E</li>
+                                <li class="col-sm-2">53AQI Poor</li>
                             </ul>
-                            <ul class="row row-cols-6 text-center m-0 p-0">
-                                <li>DL</li>
-                                <li>Sun</li>
-                                <li>30%.</li>
-                                <li>78deg</li>
-                                <li>5mph</li>
-                                <li></li>
+                            <ul class="row-4 row row-cols-6 text-center m-0 p-0">
+                                <li class="col-sm-1">DL</li>
+                                <li class="col-sm-1">Cloudy</li>
+                                <li class="col-sm-1">95%</li>
+                                <li class="col-sm-1">73&deg;F</li>
+                                <li class="col-sm-2">2mph NE</li>
+                                <li class="col-sm-2">28.6139&deg;N</li>
+                                <li class="col-sm-2">77.2088&deg;E</li>
+                                <li id="dehli-danger" class="col-sm-2">270AQI Poor</li>
                             </ul>
-                            <ul class="row row-cols-6 text-center m-0 p-0">
-                                <li>Hu</li>
-                                <li>Sun</li>
-                                <li>30%.</li>
-                                <li>78deg</li>
-                                <li>5mph</li>
-                                <li></li>
+                            <ul class="row-5 row row-cols-6 text-center m-0 p-0">
+                                <li class="col-sm-1">Hu</li>
+                                <li class="col-sm-1">Sunny</li>
+                                <li class="col-sm-1">42%.</li>
+                                <li class="col-sm-1">64&deg;F</li>
+                                <li class="col-sm-2">15mph</li>
+                                <li class="col-sm-2">31.2304&deg; N,</li>
+                                <li class="col-sm-2">121.4737&deg; E</li>
+                                <li id="shanghai-alert" class="col-sm-2">72AQI Poor</li>
                             </ul>
-                            <ul class="row row-cols-6 text-center m-0 p-0">
-                                <li>DAC</li>
-                                <li>Sun</li>
-                                <li>30%.</li>
-                                <li>78deg</li>
-                                <li>5mph</li>
-                                <li></li>
+                            <ul class="row-6 row row-cols-6 text-center m-0 p-0">
+                                <li class="col-sm-1">DAC</li>
+                                <li class="col-sm-1">Cloudy</li>
+                                <li class="col-sm-1">05%.</li>
+                                <li class="col-sm-1">80&deg;F</li>
+                                <li class="col-sm-2">SSE 9mph</li>
+                                <li class="col-sm-2">23.8041&deg; N</li>
+                                <li class="col-sm-2">90.4152&deg; E</li>
+                                <li id="dhaka-alert" class="col-sm-2">50AQI Poor</li>
                             </ul>
-                            <ul class="row row-cols-6 text-center m-0 p-0">
-                                <li>Cairo</li>
-                                <li>Sun</li>
-                                <li>30%.</li>
-                                <li>78deg</li>
-                                <li>5mph</li>
-                                <li></li>
+                            <ul class="row-7 row row-cols-6 text-center m-0 p-0">
+                                <li class="col-sm-1">Cairo</li>
+                                <li class="col-sm-1">Clear</li>
+                                <li class="col-sm-1">86%.</li>
+                                <li class="col-sm-1">59&deg;F</li>
+                                <li class="col-sm-2">N 8mph</li>
+                                <li class="col-sm-2">30.0444&deg; N</li>
+                                <li class="col-sm-2">31.2357&deg; E</li>
+                                <li class="col-sm-2">29AQI Fair</li>
                             </ul>
+                            <ul class="row-8 row row-cols-6 text-center m-0 p-0">
+                                <li class="col-sm-1">SP</li>
+                                <li class="col-sm-1">Cloudy</li>
+                                <li class="col-sm-1">94%</li>
+                                <li class="col-sm-1">65&deg;F</li>
+                                <li class="col-sm-2">ESE 6mph</li>
+                                <li class="col-sm-2">23.5558&deg; S</li>
+                                <li class="col-sm-2">46.6396&deg; E</li>
+                                <li class="col-sm-2">46AQI Fair</li>
+                            </ul>
+                            <ul class="row-9 row row-cols-6 text-center m-0 p-0">
+                                <li class="col-sm-1">NYC</li>
+                                <li class="col-sm-1">Cloudy</li>
+                                <li class="col-sm-1">57%</li>
+                                <li class="col-sm-1">65&deg;F</li>
+                                <li class="col-sm-2">SSE 8mph</li>
+                                <li class="col-sm-2">40.7128&deg; N</li>
+                                <li class="col-sm-2">74.0060&deg; W</li>
+                                <li id="nyc-alert" class="col-sm-2">68AQI Poor</li>
+                            </ul>
+                            <!-- <ul class="row-9 row row-cols-6 text-center m-0 p-0">
+                                <li class="col-sm-1">CDMX</li>
+                                <li class="col-sm-1">Sunny</li>
+                                <li class="col-sm-1">14%</li>
+                                <li class="col-sm-1">81&deg;F</li>
+                                <li class="col-sm-2">NE 14mph</li>
+                                <li class="col-sm-2">19.4326&deg; N</li>
+                                <li class="col-sm-2">99.1332&deg; E</li>
+                            </ul>
+                            <ul class="row-10 row row-cols-6 text-center m-0 p-0">
+                                <li class="col-sm-1">Jing</li>
+                                <li class="col-sm-1">Sunny</li>
+                                <li class="col-sm-1">43%</li>
+                                <li class="col-sm-1">58&deg;F</li>
+                                <li class="col-sm-2">E 6mph</li>
+                                <li class="col-sm-2">139.9042&deg;N</li>
+                                <li class="col-sm-2">116.4074&deg; E</li>
+                            </ul>
+                            <ul class="row-11 row row-cols-6 text-center m-0 p-0">
+                                <li class="col-sm-1">BOM</li>
+                                <li class="col-sm-1">Cloudy</li>
+                                <li class="col-sm-1">81%</li>
+                                <li class="col-sm-1">80&deg;F</li>
+                                <li class="col-sm-2">WNW 5mph</li>
+                                <li class="col-sm-2">19.0760&deg; N</li>
+                                <li class="col-sm-2">72.8777&deg; E</li>
+                            </ul>
+                             -->
                         </div>
-                        <div id="nav-btn-group" class="col-md-6">
-                            <div class="row row-cols-2">
-                                <div class="nav-btn col-lg-2 w-50 h-50 rounded-pill">.btn-01</div>
-                                <div class="nav-btn col-lg-2 w-50">.btn-02</div>
-                                <div class="nav-btn col-lg-2 w-50">.btn-03</div>
-                                <div class="nav-btn col-lg-2 w-50">.btn-04</div>
+                        <div id="nav-btn-group" class="col-md-3 flex-fill">
+                            <div id="nav-group" class="row row-cols-2 justify-content-evenly h-100">
+                                <div class="nav-btn col rounded-pill m-2">
+                                    <div class="btn-tag btn col-sm-1">01</div>
+                                </div>
+                                <div class="nav-btn col rounded-pill m-2">
+                                    <div class="btn-tag btn col-sm-1">02</div>
+                                </div>
+                                <div class="nav-btn col rounded-pill m-2">
+                                    <div class="btn-tag btn col-sm-1">03</div>
+                                </div>
+                                <div class="nav-btn col rounded-pill m-2">
+                                    <div class="btn-tag btn col-sm-1">04</div>
+                                </div>
                             </div>
                             
                         </div>

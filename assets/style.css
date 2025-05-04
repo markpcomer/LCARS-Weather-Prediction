@@ -1,31 +1,258 @@
 * {
-    border: 1px solid lightblue;
+    /* border: 1px solid lightblue; */
+    background-color: black;
 }
 
 :root {
     --lcars-violet: #c9f;
+    --lcars-light-blue: #89f
 }
+
+body {
+    font-family: 'Antonio', sans-serif;
+    font-size: 1.3rem;
+    
+  }
 
 .container {
     max-width: 1400px;
 }
 
+#lcars-upper {
+    height: 40%;
+}
+
+#upper-left-panels {
+    color: black;
+    background-color: #89f;
+    border-radius: 0 0 0 160px;
+    transition: width 1s;
+}
+
+/* img {
+    width: 300px;
+    height: auto;
+} */
+
+#analog-forecast {
+    width: 60%;
+}
+
+.panel-text {
+    color: black;
+}
+
+h1 {
+    line-height: 1.5;
+    font-weight: 400;
+    font-size: 4.75rem;
+    color: #f80;
+    text-transform: uppercase;
+    letter-spacing: .5rem;
+}
+
 #panel-01 {
     background-color: var(--lcars-violet);
+    color: white;
+    height: 35%;
+    margin-bottom: 3%;
+}
+
+#panel-02 {
+    background-color: #89f;
+    color: white;
+    height: 46%;
+}
+
+#panel-01-text {
+    background-color: var(--lcars-violet);
+    padding: 38% 0 0 45%;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#panel-02-text {
+    background-color: var(--lcars-light-blue);
+    padding: 10% 0 0 45%;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.upper-left-panel-text {
+    padding: 50% 10% 5% 0;
+    color: white;
 }
 
 ul {
     list-style-type: none;
 }
 
-.nav-btn {
-    background-color: var(--lcars-violet);
-    /* border-radius: 100vmax; */
+li {
+    overflow: hidden;
+    font-size: 0.9rem;
+    text-align: center;
+    font-weight: bold;
 }
 
+#nav-group {
+    display: flex;
+    /* justify-content: flex-end; */
+}
+
+.nav-btn {
+    color: black;
+    width: 40%;
+    height: 40%;
+}
+
+.btn-tag {
+    font-size: 1.5rem;
+    padding: 20% 20% 10% 0;
+    font-weight: bold;
+}
+
+.nav-btn:nth-child(1) {
+    background-color: #89f;
+}
+
+.nav-btn:nth-child(2) {
+    background-color: #f96;
+}
+
+.nav-btn:nth-child(3) {
+    background-color: #f80;
+}
+
+.nav-btn:nth-child(4) {
+    background-color: #c44;
+}
+
+@keyframes row-1-colorchange {
+    0% {color: #f80}
+    25% {color: #f80}
+    50% {color: #f80}
+    75% {color: #f80}
+    80% {color: #f80}
+    90% {color: black}
+    100% {color: #f5f6fa}
+}
+
+@keyframes colorchange {
+    0% {color: #f80}
+    25% {color: #f80}
+    50% {color: #f80}
+    75% {color: #f80}
+    80% {color: black}
+    90% {color: black}
+    100% {color: #f5f6fa}
+}
+
+/*  Temporary Styling - Will be built dynamically in JS */
+@keyframes danger-colorchange {
+    0% {color: red}
+    25% {color: red}
+    50% {color: red}
+    75% {color: red}
+    80% {color: black}
+    90% {color: black}
+    100% {color: #f5f6fa} 
+}
+
+@keyframes alert-colorchange {
+    0% {color: yellow}
+    25% {color: yellow}
+    50% {color: yellow}
+    75% {color: yellow}
+    80% {color: black}
+    90% {color: black}
+    100% {color: #f5f6fa} 
+}
+
+#dehli-danger {
+    animation: danger-colorchange 3s infinite; animation-delay: .3s;
+
+}
+
+#shanghai-alert {
+    animation: alert-colorchange 3s infinite; animation-delay: .4s;
+
+}
+#dhaka-alert {
+    animation: alert-colorchange 3s infinite; animation-delay: .5s;
+}
+
+#nyc-alert {
+    animation: alert-colorchange 4s infinite; animation-delay: .8s;
+}
+
+/*  End temp code    */
 
 
+.row-1{
+    color: #f80;
+}
 
+.row-2,
+.row-3,
+.row-4,
+.row-5,
+.row-6,
+.row-7,
+.row-8,
+.row-9,
+.row-10,
+.row-11,
+.row-12 {
+    text-align: right; 
+}
+
+.row-1 {
+    animation: row-1-colorchange 4s infinite; 
+}
+
+.row-2 {
+    animation: colorchange 2s infinite; animation-delay: .1s;
+}
+
+.row-3 {
+    animation: colorchange 2s infinite; animation-delay: .2s;
+}
+
+.row-4 {
+    animation: colorchange 3s infinite; animation-delay: .3s;
+}
+
+.row-5 {
+    animation: colorchange 3s infinite; animation-delay: .4s;
+}
+
+.row-6 {
+    animation: colorchange 3s infinite; animation-delay: .5s;
+}
+
+.row-7 {
+    animation: colorchange 4s infinite; animation-delay: .6s;
+}
+
+.row-8 {
+    animation: colorchange 4s infinite; animation-delay: .7s;
+}
+
+.row-9 {
+    animation: colorchange 4s infinite; animation-delay: .8s;
+}
+
+.row-10 {
+    animation: colorchange 5s infinite; animation-delay: .9s;
+}
+
+.row-11 {
+    animation: colorchange 5s infinite; animation-delay: 1s;
+}
+
+.row-12 {
+    animation: colorchange 5s infinite; animation-delay: 1.1s;
+}
 
 /* 
 
