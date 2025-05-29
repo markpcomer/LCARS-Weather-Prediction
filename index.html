@@ -13,7 +13,8 @@
         <link rel="stylesheet" href="./assets/style.css">
     </head>
     <body>
-        <div id="container" class="container-fluid vh-100 bg-dark text-light">
+        <!-- <div id="container" class="container-fluid vh-100 text-light"> -->
+        <div id="container" class="bg-black text-light py-2">
             <div id="lcars-upper" class="row">
                 <div id="upper-left-panels" class="col-lg-2">
                     <!-- <div id="panel-01">
@@ -28,8 +29,7 @@
                     <div class="panel-02">02-Saved Search</div>
                 </div>
                 <div id="banner" class="col-lg-6 flex-fill text-end">
-                    <h1>                    <img class="col-lg-2" src="./assets/federation.png" alt="Federation Logo">
-                        LCARS &#149; 47988 </h1>
+                    <h1>LCARS &#149; 47988 </h1>
                     <div id="banner-content" class="row">
                     
                         <div id="analog-forecast" class="">
@@ -46,17 +46,17 @@
                             <ul class="row-2 row row-cols-6 text-center m-0 p-0">
                                 <li class="col-sm-1">SF</li>
                                 <li class="col-sm-1">Sun</li>
-                                <li class="col-sm-1">57%.</li>
+                                <li class="col-sm-1">57%</li>
                                 <li class="col-sm-1">57&deg;F</li>
                                 <li class="col-sm-2">10mph SE</li>
-                                <li class="col-sm-2">37.7749&deg;N,</li>
+                                <li class="col-sm-2">37.7749&deg;N</li>
                                 <li class="col-sm-2">122.4194&deg;W</li>
                                 <li class="col-sm-2">32AQI Fair</li>
                             </ul>
                             <ul class="row-3 row row-cols-6 text-center m-0 p-0">
                                 <li class="col-sm-1">TYO</li>
                                 <li class="col-sm-1">Rain</li>
-                                <li class="col-sm-1">60%.</li>
+                                <li class="col-sm-1">60%</li>
                                 <li class="col-sm-1">58&deg;F</li>
                                 <li class="col-sm-2">4mph N</li>
                                 <li class="col-sm-2">35.6764&deg;N</li>
@@ -76,34 +76,34 @@
                             <ul class="row-5 row row-cols-6 text-center m-0 p-0">
                                 <li class="col-sm-1">Hu</li>
                                 <li class="col-sm-1">Sunny</li>
-                                <li class="col-sm-1">42%.</li>
+                                <li class="col-sm-1">42%</li>
                                 <li class="col-sm-1">64&deg;F</li>
-                                <li class="col-sm-2">15mph</li>
-                                <li class="col-sm-2">31.2304&deg; N,</li>
-                                <li class="col-sm-2">121.4737&deg; E</li>
+                                <li class="col-sm-2">15mph NNE</li>
+                                <li class="col-sm-2">31.2304&deg;N</li>
+                                <li class="col-sm-2">121.4737&deg;E</li>
                                 <li id="shanghai-alert" class="col-sm-2">72AQI Poor</li>
                             </ul>
                             <ul class="row-6 row row-cols-6 text-center m-0 p-0">
                                 <li class="col-sm-1">DAC</li>
                                 <li class="col-sm-1">Cloudy</li>
-                                <li class="col-sm-1">05%.</li>
+                                <li class="col-sm-1">05%</li>
                                 <li class="col-sm-1">80&deg;F</li>
-                                <li class="col-sm-2">SSE 9mph</li>
-                                <li class="col-sm-2">23.8041&deg; N</li>
-                                <li class="col-sm-2">90.4152&deg; E</li>
+                                <li class="col-sm-2">9mph SSE</li>
+                                <li class="col-sm-2">23.8041&deg;N</li>
+                                <li class="col-sm-2">90.4152&deg;E</li>
                                 <li id="dhaka-alert" class="col-sm-2">50AQI Poor</li>
                             </ul>
                             <ul class="row-7 row row-cols-6 text-center m-0 p-0">
                                 <li class="col-sm-1">Cairo</li>
                                 <li class="col-sm-1">Clear</li>
-                                <li class="col-sm-1">86%.</li>
+                                <li class="col-sm-1">86%</li>
                                 <li class="col-sm-1">59&deg;F</li>
-                                <li class="col-sm-2">N 8mph</li>
-                                <li class="col-sm-2">30.0444&deg; N</li>
-                                <li class="col-sm-2">31.2357&deg; E</li>
+                                <li class="col-sm-2">8mph n</li>
+                                <li class="col-sm-2">30.0444&deg;N</li>
+                                <li class="col-sm-2">31.2357&deg;E</li>
                                 <li class="col-sm-2">29AQI Fair</li>
                             </ul>
-                            <ul class="row-8 row row-cols-6 text-center m-0 p-0">
+                            <!-- <ul class="row-8 row row-cols-6 text-center m-0 p-0">
                                 <li class="col-sm-1">SP</li>
                                 <li class="col-sm-1">Cloudy</li>
                                 <li class="col-sm-1">94%</li>
@@ -112,7 +112,7 @@
                                 <li class="col-sm-2">23.5558&deg; S</li>
                                 <li class="col-sm-2">46.6396&deg; E</li>
                                 <li class="col-sm-2">46AQI Fair</li>
-                            </ul>
+                            </ul> -->
                             <ul class="row-9 row row-cols-6 text-center m-0 p-0">
                                 <li class="col-sm-1">NYC</li>
                                 <li class="col-sm-1">Cloudy</li>
@@ -169,9 +169,34 @@
                             </div>
                             
                         </div>
+                        <div id="upper-divider-bar" class="row ms-0">
+                            <div class="upper-bar-01"></div>
+                            <div class="upper-bar-02"></div>
+                            <div class="upper-bar-03"></div>
+                            <div class="upper-bar-04"></div>
+                            <div class="upper-bar-05"></div>
+                        </div>
                     </div>
-                    
-                    
+                </div>
+            </div>
+            <div class="lcars-lower row">
+                <div class="lower-left-panels col-lg-2">
+                    <div>
+                        <div class="panel-03">03-Saved Search</div>
+                        <div class="panel-04">04-Saved Search</div>
+                        <div class="panel-05">05-Saved Search</div>
+                        <div class="panel-06">06-Saved Search</div>
+                        <div class="panel-07">07-Saved Search</div>
+                        <div class="panel-08">08-Saved Search</div>
+                        <div class="panel-09">09-Saved Search</div>
+                    </div>
+                </div>
+                <div class="weather-section">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <aside></aside>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
