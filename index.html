@@ -6,6 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+		rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +35,6 @@
                 <div id="banner" class="text-end">
                     <h1>LCARS &#149; 47988 </h1>
                     <div id="banner-content" class="row m-0">
-                    
                         <!-- <div id="analog-forecast" class="row"> -->
                         <div id="analog-forecast" class="row mt-0 me-0 mb-4 ms-0">
                             <ul class="row-1 row row-cols-6 m-0 p-0 ">
@@ -170,11 +171,8 @@
                                     <div class="btn-tag btn col-sm-1">04</div>
                                 </div>
                             </div>
-                            
                         </div>
-                        <div id="top-curve">
-                            <div id="top-curve-inner"></div>
-                        </div>
+                        
                         <div id="upper-divider-bar" class="row ms-0">
                             <div class="upper-bar-01"></div>
                             <div class="upper-bar-02"></div>
@@ -182,6 +180,9 @@
                             <div class="upper-bar-04"></div>
                             <div class="upper-bar-05"></div>
                         </div>
+                    </div>
+                    <div id="top-curve" class="">
+                        <div id="top-curve-inner"></div>
                     </div>
                 </div>
             </div>
@@ -199,9 +200,16 @@
                 </div>
                 <div class="weather-section">
                     <div class="container-fluid">
-                        <div class="row">
-                            <aside></aside>
+                        <div id="lower-divider-bar" class="d-flex row ms-0">
+                            <div class="lower-bar-01"></div>
+                            <div class="lower-bar-02"></div>
+                            <div class="lower-bar-03"></div>
+                            <div class="lower-bar-04"></div>
+                            <div class="lower-bar-05"></div>
                         </div>
+                    </div>
+                    <div id="lower-curve">
+                        <div id="lower-curve-inner"></div>
                     </div>
                 </div>
             </div>

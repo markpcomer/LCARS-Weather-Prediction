@@ -10,6 +10,8 @@
     --lcars-light-blue: #79f;
     --lcars-orange: #f80;
     --lcars-red: #c44;
+    --lcars-beige: #ffaa90;
+
 }
 
 body {
@@ -42,6 +44,10 @@ body {
     border-radius: 0 0 0 100px;
 }
 
+#banner {
+    position: relative;
+}
+
 /* img {
     width: 300px;
     height: auto;
@@ -68,7 +74,7 @@ h1 {
 .panel-01 {
     text-align: right;
     background-color: var(--lcars-violet);    
-    padding-top: clamp(40px, 9vw, 100px);
+    padding-top: clamp(40px, 9vw, 82px);
     padding-right: .75rem;
     padding-bottom: .75rem;
     border-bottom: .25rem solid black;
@@ -121,13 +127,13 @@ li {
 
 .nav-btn {
     color: black;
-    width: 40%;
-    height: 035%;
+    width: 45%;
+    height: 35%;
 }
 
 .btn-tag {
     font-size: 1.5rem;
-    padding: 20% 20% 10% 0;
+    padding: 20% 20% 0 0;
     font-weight: bold;
 }
 
@@ -276,34 +282,53 @@ li {
     animation: colorchange 5s infinite; animation-delay: 1.1s;
 }
 
+
+#top-curve {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(to top right, #79f 50%, black 50%);
+}
+
+#top-curve-inner {
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    border-radius: 0 0 0 40px;
+}
+
 .upper-bar-01,
 .upper-bar-02,
 .upper-bar-03,
 .upper-bar-04,
-.upper-bar-05 {
-    height: 28px;
+.upper-bar-05,
+.lower-bar-01,
+.lower-bar-02,
+.lower-bar-03,
+.lower-bar-04,
+.lower-bar-05 {
+    height: 22px;
     border-right: .25rem solid black;
 }
 
 .upper-bar-01 {
     background-color: var(--lcars-light-blue);
-    width: 40%;
-    margin-left: -2%;
+    width: 433px;
+    margin-left: -3%;
 }
 
 .upper-bar-02 {
     background-color: var(--lcars-orange);
-    width: 4%;
+    width: 40px;
 }
 
 .upper-bar-03 {
     background-color: var(--lcars-violet);
-    width: 17%;
+    width: 200px;
 }
 
 .upper-bar-04 {
     background-color: var(--lcars-violet);
-    flex: 1;
+    width: 425px;
 }
 
 .upper-bar-05 {
@@ -316,34 +341,6 @@ li {
     width: 4%;
 }
 
-#banner {
-    position: relative;
-}
-
-/* #banner::before {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(to top right, var(--lcars-light-blue) 50%, black 50%);
-    position: absolute;
-    left: 0;
-    bottom: 28px;
-    z-index: -1;
-} */
-
-/* #banner::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 60px;
-    background-color: black;
-    border-radius: 0 0 0 60px;
-    position: absolute;
-    left: 0;
-    bottom: 28px;
-    z-index: -1;
-} */
 
 .lcars-lower {
     max-width: 1340px;
@@ -358,11 +355,105 @@ li {
     min-width: 190px;
     padding-top: 100px;
     /* color: black; */
-    background-color: var(--lcars-red);
     text-align: right;
     background-color: var(--lcars-red);
-    border-radius: 160px 0 0 0;
+    border-radius: 100px 0 0 0;
 }
+
+.panel-03, 
+.panel-04, 
+.panel-05,
+.panel-06,
+.panel-07,
+.panel-08,
+.panel-09 {
+    border-bottom: 5px solid black;
+    color: black;
+}
+
+.panel-03 {
+    padding: 0 10px 15px 0;
+    background-color: var(--lcars-red);
+
+}
+
+.panel-04 {
+    padding: 120px 10px 15px 0;
+    background-color: var(--lcars-red);
+}
+
+.panel-05 {
+    background-color: var(--lcars-orange);
+    padding: 35px 10px 10px 0;
+}
+
+.panel-06 {
+    background-color: var(--lcars-beige);
+    padding: 10px 10px 200px 0;
+}
+
+.panel-07 {
+    background-color: var(--lcars-light-blue);
+    padding: 10px 10px 120px 0;
+}
+
+.panel-08 {
+    background-color: var(--lcars-beige);
+    padding: 10px 10px 40px 0;
+}
+
+.panel-09 {
+    background-color: var(--lcars-red);
+    padding: 10px 10px 120px 0;
+}
+
+.lower-bar-01 {
+    background-color: var(--lcars-red);
+    width: 438px;
+    margin-left: -3%;
+}
+
+.lower-bar-02 {
+    background-color: var(--lcars-beige);
+    width: 40px;
+}
+
+.lower-bar-03 {
+    background-color: var(--lcars-red);
+    width: 200px;
+    height: 14px;
+}
+
+.lower-bar-04 {
+    background-color: var(--lcars-violet);
+    width: 425px;
+}
+
+.lower-bar-05 {
+    background-color: var(--lcars-beige);
+    width: 4%;
+}
+
+.lower-bar-05::after {
+    background-color: black;
+    width: 4%;
+}
+
+#lower-curve {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(to bottom right, #d44 50%, black, 50%);
+    z-index: 1;
+}
+
+#lower-curve-inner {
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    border-radius: 40px 0 0 0;
+}
+
+
 
 
 
