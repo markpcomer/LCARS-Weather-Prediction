@@ -34,20 +34,21 @@ const analogWeatherCities = [
 
 
 function fetchAnalogWeather(location) {
-    const { lat, lon, city } = location;
+    const { lat, lon, city, abbreviation } = location;
 
     console.log('Fetching data for:', city);
     console.log('Latitude:', lat, "Longitude:", lon);
+    
 
     if (!lat || !lon) {
         console.error('Missing lat/lon for:', city);
-        return;
+        return Promise.resolve();
     }
 
     const apiUrl = `${rootAPIUrl}/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`;
     const pollutionApiUrl = `${rootAPIUrl}/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${APIKey}`;
 
-    Promise.all([
+    return Promise.all([
         fetch(apiUrl)
             .then(function (res) {
                 return res.json();
@@ -56,68 +57,110 @@ function fetchAnalogWeather(location) {
             .then(function (res) {
                 return res.json();
             }) 
+            
     ])
     .then(function(results) {
         let weatherData = results[0];
         let pollutionData = results[1];
-        
+        createAnalogWeatherRow(abbreviation, weatherData, pollutionData);
 
-        console.log('City:', city);
-        console.log('Weather Data:', apiData);
-        console.log('Pollution Data', pollutionData);
     })
     .catch(function(err) {
         console.error('Error:', city, err);
     })
-
+    
+        
 }
 
-fetchAnalogWeather(analogWeatherCities[6]);
 
 // analogWeatherCities.forEach(function(cityObj) {
 //     fetchAnalogWeather(cityObj);
 // });
 
 
-function createAnalogWeatherRow(weatherData, pollutionData) {
-    let city = weatherData.city.name;
+function createAnalogWeatherRow(abbreviation, weatherData, pollutionData) {
+    const analogContainer = document.querySelector('#analog-forecast');
+    analogContainer.setAttribute('class', 'm-0');
+
+    // let city = weatherData.city.name;
     let sky = weatherData.list[0].weather[0].main;
-    let temp = weather.list[0].main.temp;
+    let temp = weatherData.list[0].main.temp;
     let humidity = weatherData.list[0].main.humidity;
     let wind = weatherData.list[0].wind.speed;
     let lat = weatherData.city.coord.lat;
     let lon = weatherData.city.coord.lon;
-    let pollution = pollutionData.list[0].main.aqi;
+    let aqi = pollutionData.list[0].main.aqi;
+
+
     
-    let resultRow = document.createElement('div');
+    let resultRow = document.createElement('ul');
+    resultRow.setAttribute('class', 'row', 'row-cols-6', 'm-0', 'p-0', 'text-end', 'me-0', 'g-0');
 
-    let cityResult = document.createElement('div');
-    let skyResult = document.createElement('div');
-    let tempResult = document.createElement('div');
-    let humidityResult = document.createElement('div');
-    let windResult = document.createElement('div');
-    let latResult = document.createElement('div');
-    let lonResult = document.createElement('div');
-    let airQualityResult = document.createElement('div');
+    let cityResult = document.createElement('li');
+    cityResult.setAttribute('class', 'col-sm-1', 'text-end');
+    cityResult.textContent = abbreviation;
 
-    resultRow.setAttribute('class', 'row', 'row-cols-6', 'm-0', 'p-0');
-
-    cityResult.setAttribute('class', 'col-sm-1');
+    let skyResult = document.createElement('li');
     skyResult.setAttribute('class', 'col-sm-1');
-    tempResult.setAttribute('class', 'col-sm-1');
-    humidityResult.setAttribute('class', 'col-sm-1');
-    windResult.setAttribute('class', 'col-sm-2');
-    latResult.setAttribute('class', 'col-sm-2');
-    lonResult.setAttribute('class', 'col-sm-2');
-    airQualityResult.setAttribute('class', 'col-sm-2');
+    skyResult.textContent = sky;
 
+
+    let tempResult = document.createElement('li');
+    tempResult.setAttribute('class', 'col-sm-1');
+    tempResult.textContent = `${temp.toFixed(0)}°F`;
+
+    let humidityResult = document.createElement('li');
+    humidityResult.setAttribute('class', 'col-sm-1');
+    humidityResult.textContent = `${humidity}%`;
+
+    let windResult = document.createElement('li');
+    windResult.setAttribute('class', 'col-sm-2');
+    windResult.textContent = `${wind}MPH`;
+
+    let latResult = document.createElement('li');
+    latResult.setAttribute('class', 'col-sm-2');
+    latResult.textContent = lat;
+
+    let lonResult = document.createElement('li');
+    lonResult.setAttribute('class', 'col-sm-2');
+    lonResult.textContent = lon;
+
+    let airQualityResult = document.createElement('li');
+    airQualityResult.setAttribute('class', 'col-sm-2');
+    airQualityResult.textContent = `AQI: ${aqi}`;
+
+    resultRow.append(cityResult, skyResult, tempResult, humidityResult, 
+        windResult, latResult, lonResult, airQualityResult);
+
+    analogContainer.append(resultRow);
+}
+
+function renderAnalogWeatherHeader() {
+    const analogHeaderContainer = document.createElement('analog-weather-header');
+    analogHeaderContainer.setAttribute('class', 'text-end');
+
+    const headerRow = document.createElement('div');
+    headerRow.setAttribute('class', 'row', 'm-0', 'text-end', 'text-white');
+    const headers = ['City', 'Sky', 'Temp', 'Hum', 'Wind', 'Lat', 'Lon', 'AQI'];
+    const sizes = ['col-sm-1', 'col-sm-1', 'col-sm-1', 'col-sm-1', 'col-sm-1', 'col-sm-2', 'col-sm-2', 'col-sm-2'];
+    
+    for (let i = 0; i < headers.length; i++) {
+        let col = document.createElement('div');
+        col.className = sizes[i];
+        col.textContent = headers[i];
+        headerRow.append(col);
+    }
+
+    analogHeaderContainer.append(headerRow);
 
 }
 
-function renderAnalogCities() {
-    analogWeatherCities.forEach(function(cityObj) {
-        fetchAnalogWeather(cityObj);
-    })
+async function renderAnalogCities() {
+    renderAnalogWeatherHeader();
+    
+    for (let i = 0; i < analogWeatherCities.length; i++) {
+        await fetchAnalogWeather(analogWeatherCities[i]);
+    }
 }
 
 function getStardate() {
@@ -303,12 +346,6 @@ function fetchWeather(searchValue) {
         })
 }
 
-function checkApiIsWorking() {
-    
-    console.log(`${rootAPIUrl}/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`);
-}
-
-checkApiIsWorking(exampleLocation);
 
 
 function fetchWeatherData(location, onSuccess) {
@@ -340,6 +377,9 @@ function handleWeatherData(cityName, weatherData) {
 }
 
 // fetchWeatherData(exampleLocation.name, handleWeatherData);
+document.addEventListener('DOMContentLoaded', function () {
+    renderAnalogCities();
+});
 
   
 
