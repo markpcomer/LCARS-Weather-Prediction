@@ -12,6 +12,41 @@ const searchHistoryEl = document.querySelector('#history');
 const todayCard = document.querySelector('#today-card');
 const futureCards = document.querySelector('#future-cards');
 
+const styleTag = document.createElement('style');
+styleTag.innerHTML = `
+    @keyframes colorchange {
+        0% {color: #f80;}
+        25% {color: #f80;}
+        50% {color: #f80;}
+        75% {color: #f80;}
+        80% {color: black;}
+        90% {color: black;}
+        100% { color: #f5f6fa;}
+    }
+
+    @keyframes alert-colorchange {
+        0% {color: yellow;}
+        25% {color: yellow;}
+        50% {color: yellow;}
+        75% {color: yellow;}
+        80% {color: black;}
+        90% {color: black;}
+        100% { color: #f5f6fa;}
+    }
+
+    @keyframes alert-danger {
+        0% {color: red:}
+        25% {color: red:}
+        50% {color: red:}
+        75% {color: red:}
+        80% {color: black;}
+        90% {color: black;}
+        100% {color: #f5f6fa}
+    }
+`;
+
+document.head.append(styleTag);
+
 
 // // ========== Day.js Setup ==========
 // FUNCTION setup date/time plugins
@@ -33,11 +68,12 @@ const analogWeatherCities = [
 // console.log(analogWeatherCities);
 
 
+
 function fetchAnalogWeather(location) {
     const { lat, lon, city, abbreviation } = location;
 
-    console.log('Fetching data for:', city);
-    console.log('Latitude:', lat, "Longitude:", lon);
+    // console.log('Fetching data for:', city);
+    // console.log('Latitude:', lat, "Longitude:", lon);
     
 
     if (!lat || !lon) {
@@ -72,12 +108,6 @@ function fetchAnalogWeather(location) {
         
 }
 
-
-// analogWeatherCities.forEach(function(cityObj) {
-//     fetchAnalogWeather(cityObj);
-// });
-
-
 function createAnalogWeatherRow(abbreviation, weatherData, pollutionData) {
     const analogContainer = document.querySelector('#analog-forecast');
     analogContainer.setAttribute('class', 'm-0');
@@ -91,43 +121,96 @@ function createAnalogWeatherRow(abbreviation, weatherData, pollutionData) {
     let lon = weatherData.city.coord.lon;
     let aqi = pollutionData.list[0].main.aqi;
 
-
     
-    let resultRow = document.createElement('ul');
-    resultRow.setAttribute('class', 'row', 'row-cols-6', 'm-0', 'p-0', 'text-end', 'me-0', 'g-0');
+    // resultRow.setAttribute('class', 'row', 'row-cols-6', 'm-0', 'p-0', 'text-end', 'me-0', 'g-0');
 
-    let cityResult = document.createElement('li');
-    cityResult.setAttribute('class', 'col-sm-1', 'text-end');
-    cityResult.textContent = abbreviation;
+    // let cityResult = document.createElement('li');
+    // cityResult.setAttribute('class', 'col-sm-1', 'text-end');
+    // cityResult.textContent = abbreviation;
 
-    let skyResult = document.createElement('li');
-    skyResult.setAttribute('class', 'col-sm-1');
-    skyResult.textContent = sky;
+    // let skyResult = document.createElement('li');
+    // skyResult.setAttribute('class', 'col-sm-1');
+    // skyResult.textContent = sky;
+
+    // let tempResult = document.createElement('li');
+    // tempResult.setAttribute('class', 'col-sm-1');
+    // tempResult.textContent = `${temp.toFixed(0)}°F`;
+
+    // let humidityResult = document.createElement('li');
+    // humidityResult.setAttribute('class', 'col-sm-1');
+    // humidityResult.textContent = `${humidity}%`;
+
+    // let windResult = document.createElement('li');
+    // windResult.setAttribute('class', 'col-sm-2');
+    // windResult.textContent = `${wind}MPH`;
+
+    // let latResult = document.createElement('li');
+    // latResult.setAttribute('class', 'col-sm-2');
+    // latResult.textContent = lat;
+
+    // let lonResult = document.createElement('li');
+    // lonResult.setAttribute('class', 'col-sm-2');
+    // lonResult.textContent = lon;
+
+    // let airQualityResult = document.createElement('li');
+    // airQualityResult.setAttribute('class', 'col-sm-2');
+    // airQualityResult.textContent = `AQI: ${aqi}`;
+
+    function createAnalogCells(className, content, value, thresholds) {
+        let li = document.createElement('li');
+        li.setAttribute('class', className);
+        li.textContent = content;
+
+        if(thresholds) {
+            if(value >= thresholds.danger) {
+                li.style.animation = 'danger-colorchange 3s infinite';
+            } else if (value >= thresholds.alert) {
+                li.style.animation = 'alert-colorchange 3s infinite'
+            } else {
+                li.style.animation = 'colorchange 3s infinite';
+            }
+        } else {
+            li.style.animation = 'colorchange 3s infinite';
+        }
+        return li;
+    }
+
+let resultRow = document.createElement('ul');
 
 
-    let tempResult = document.createElement('li');
-    tempResult.setAttribute('class', 'col-sm-1');
-    tempResult.textContent = `${temp.toFixed(0)}°F`;
 
-    let humidityResult = document.createElement('li');
-    humidityResult.setAttribute('class', 'col-sm-1');
-    humidityResult.textContent = `${humidity}%`;
 
-    let windResult = document.createElement('li');
-    windResult.setAttribute('class', 'col-sm-2');
-    windResult.textContent = `${wind}MPH`;
+    // if (temp >= 100) {
+    //     tempResult.style.animation = 'danger-colorchange 3s infinite';
+    // } else if (temp >= 80) {
+    //     tempResult.style.animation = 'alert-colorchange 3s infinite';
+    // } else {
+    //     tempResult.style.animation = 'colorchange 3s infinite';
+    // }
 
-    let latResult = document.createElement('li');
-    latResult.setAttribute('class', 'col-sm-2');
-    latResult.textContent = lat;
+    // if (humidity >= 80) {
+    //     humidityResult.style.animation = 'danger-colorchange 3s infinite';
+    // } else if (humidity >= 50) {
+    //     humidityResult.style.animation = 'alert-colorchange 3s infinite';
+    // } else {
+    //     humidityResult.style.animation = 'colorchange 3s infinite';
+    // }
 
-    let lonResult = document.createElement('li');
-    lonResult.setAttribute('class', 'col-sm-2');
-    lonResult.textContent = lon;
+    // if (wind >= 55) {
+    //     windResult.style.animation = 'danger-colorchange 3s infinite';
+    // } else if (wind > 30) {
+    //     windResult.style.animation = 'alert-colorchange 3s infinite';
+    // } else {
+    //     windResult.style.animation = 'colorchange 3s infinite';
+    // }
 
-    let airQualityResult = document.createElement('li');
-    airQualityResult.setAttribute('class', 'col-sm-2');
-    airQualityResult.textContent = `AQI: ${aqi}`;
+    // if (aqi >= 4) {
+    //     airQualityResult.style.animation = 'danger-colorchange 3s infinite';
+    // } else if (aqi === 3) {
+    //     airQualityResult.style.animation = 'alert-colorchange 3s infinite';
+    // } else {
+    //     airQualityResult.style.animation = 'colorchange 3s infinite'
+    // }
 
     resultRow.append(cityResult, skyResult, tempResult, humidityResult, 
         windResult, latResult, lonResult, airQualityResult);
@@ -137,12 +220,12 @@ function createAnalogWeatherRow(abbreviation, weatherData, pollutionData) {
 
 function renderAnalogWeatherHeader() {
     const analogHeaderContainer = document.createElement('analog-weather-header');
-    analogHeaderContainer.setAttribute('class', 'text-end');
+    analogHeaderContainer.setAttribute('class','d-flex', 'text-end');
 
-    const headerRow = document.createElement('div');
-    headerRow.setAttribute('class', 'row', 'm-0', 'text-end', 'text-white');
+    const headerRow = document.createElement('ul');
+    headerRow.setAttribute('class', 'row', 'm-0','mb-0', 'text-end', 'text-white');
     const headers = ['City', 'Sky', 'Temp', 'Hum', 'Wind', 'Lat', 'Lon', 'AQI'];
-    const sizes = ['col-sm-1', 'col-sm-1', 'col-sm-1', 'col-sm-1', 'col-sm-1', 'col-sm-2', 'col-sm-2', 'col-sm-2'];
+    const sizes = ['col-sm-1', 'col-sm-1', 'col-sm-1', 'col-sm-1', 'col-sm-2', 'col-sm-2', 'col-sm-2', 'col-sm-2'];
     
     for (let i = 0; i < headers.length; i++) {
         let col = document.createElement('div');
