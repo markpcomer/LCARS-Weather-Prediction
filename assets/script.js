@@ -147,7 +147,7 @@ function createAnalogWeatherRow(abbreviation, weatherData, pollutionData) {
         let cityResult = createAnalogCells('col-sm-1 text-center', abbreviation);
         let skyResult = createAnalogCells('col-sm-1 text-center', sky);
         let tempResult = createAnalogCells('col-sm-1 text-center', `${temp.toFixed(0)}°F`, temp, {danger: 100, alert: 80});
-        let humidityResult = createAnalogCells('col-sm-1 text-center', `${humidity}`, humidity, {danger: 80, alert: 60});
+        let humidityResult = createAnalogCells('col-sm-1 text-center', `${humidity}%`, humidity, {danger: 80, alert: 60});
         let windResult = createAnalogCells('col-sm-2 text-center', `${wind}mph`, wind, {danger: 55, alert: 30});
         let latResult = createAnalogCells('col-sm-2 text-center', lat);
         let lonResult = createAnalogCells('col-sm-2 text-center', lon);
@@ -188,7 +188,6 @@ async function renderAnalogCities() {
 
 function renderTodayWeatherCard(weatherData) {
     todayCard.innerHTML = ' ';
-
     if(!weatherData) {
         console.error('Weather data is missing or invalid.');
         return;
@@ -200,241 +199,182 @@ function renderTodayWeatherCard(weatherData) {
 
     const card = document.createElement('div');
     card.className = 'card';
-    const cardBody = document.createElement('div');
+    const cardBody = document.createElement('div'); 
     cardBody.className = 'card-body';
     card.append(cardBody);
 
+    const cardHeading = document.createElement('h2');
+    cardHeading.className = 'h3 card-heading';
+    cardHeading.textContent = `${city} ${todayDate} Stardate: ${currentStarDate}`;
+
+    const sky = document.createElement('p');
+    sky.classList = 'card-text';
+    sky.textContent = `${weatherData.list[0].weather[0].main}`;
+
+    const temp = document.createElement('p');
+    temp.classList = 'card-text';
+    temp.textContent = `Temp: ${weatherData.list[0].main.temp}°F`;
+
+    const humidity = document.createElement('p');
+    humidity.classList = 'card-text';
+    humidity.classList = `${weatherData.list[0].main.humidity}%`;
+
+    const wind = document.createElement('p');
+    wind.classList = 'card-text';
+    wind.textContent = `Wind: ${wind} MPH`;
+
+    const aqi = document.createElement('p');
+    aqi.classList = 'card-text';
+    aqi.textContent = `AQI: ${pollutionData.list[0].main.aqi}`;
+
+    cardBody.append(cardHeading, sky, temp, humidity, wind, aqi);
+    card.append(cardBody);
+    
+    todayCard.append(card);
+
 }
 
+function renderAllCards(city, data) {
+    renderTodayWeatherCard(city, data.list[0], data.city.timezone);
+}
 
+function fetchWeatherData(location) {
+    const { lat, lon} = location; 
+    const city = location.name;
 
+    var weatherAPI = `${weatherApiRootUrl}/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`;
 
-
-
-
-
-
-// // ========== Search History ==========
-// FUNCTION get stored history from local storage
-//     IF history exists
-//         RETURN parsed history
-//     ELSE
-//         RETURN empty list
-
-// FUNCTION save history to local storage
-
-// FUNCTION create button for a past search
-//     CREATE button element with search term
-
-// FUNCTION render all history buttons in container
-//     CLEAR container
-//     FOR each item in history (latest first)
-//         CREATE button
-//         ADD to container
-
-// FUNCTION add new search to history
-//     IF already in history, STOP
-//     ADD to history list
-//     SAVE history
-//     RE-RENDER history buttons
-
-// FUNCTION initialize history on app load
-//     GET stored history
-//     RENDER buttons
-//     RETURN history list
-
-// // ========== Weather Rendering ==========
-// FUNCTION create today's weather card
-//     CREATE card element with:
-//         - city name
-//         - date
-//         - weather icon
-//         - temp, wind, humidity
-//     RETURN card
-
-// FUNCTION show today's weather in container
-//     CLEAR container
-//     CREATE card
-//     ADD card to container
-
-
-// FUNCTION create 1 forecast card
-//     CREATE card with:
-//         - forecast date
-//         - icon, temp, wind, humidity
-//     RETURN card
-
-// FUNCTION render all forecast cards
-//     GET forecast data between tomorrow and 5 days out at noon
-//     CLEAR container
-//     ADD "5-Day Forecast" title
-//     FOR each valid forecast
-//         CREATE forecast card
-//         ADD to container
-
-// FUNCTION render both current + forecast weather
-//     RENDER current weather
-//     RENDER forecast
-
-// // ========== API Calls ==========
-// FUNCTION fetch weather by coordinates
-//     MAKE API call with lat/lon
-//     ON success:
-//         RUN success function with city + weather data
-//     ON failure:
-//         LOG error
-
-// FUNCTION fetchCurrentWeatherData(searchValue):
-
-//   SET geoCodeURL TO "geocoding API URL with searchValue and API key"
-
-//   MAKE network request to geoCodeURL
-//     ON response:
-//       CONVERT response to JSON
-//       IF no data found (empty array or no first item):
-//         LOG "location not found"
-//       ELSE:
-//         EXTRACT latitude and longitude from the first result
-
-//         SET weatherApiUrl TO "weather API URL using lat, lon, and API key"
-
-//         MAKE network request to weatherApiUrl
-//           ON response:
-//             CONVERT response to JSON
-//             CALL renderCurrentWeatherCard with the weather data
-//             CALL citySearchHistory with the original searchValue
-//           ON error:
-//             LOG "Error in inner fetch" with error details
-
-//     ON error:
-//       LOG "Error in outer fetch" with error details
-
-
-const exampleLocation = {
-    lat: 40.7128,        // Latitude of New York City
-    lon: -74.0060,       // Longitude of New York City
-    name: 'New York'     // City name
-  };
-  
-function fetchWeather(searchValue) {
-    console.log(`🔍 Starting weather data fetch for: ${searchValue}`);
-
-    let geoCodeURL = `https://api.openweathermap.org/geo/1.0/direct?q=${searchValue}&limit=5&appid=${APIKey}`;
-    console.log(`🌐 Geocode API URL: ${geoCodeURL}`);
-
-
-    fetch(geoCodeURL)
+    fetch(weatherAPI)
         .then(function (res) {
-            console.log('📡 Geocode response received:', res);
-            return res.json();
+            return res.json
         })
         .then(function (data) {
-            console.log('📦 Parsed geocode data', data);
+            renderItems(city, data);
+        })
+        .catch(function (err) {
+            console.error(err)
+        })
+}
 
-            if(!data[0]){
-                console.error('Location not found.');
-                return;
+
+function fetchCoordinates(search) {
+    var apiUrl = `${rootAPIUrl}/geo/1.0/direct?q=${search}&limit=5&appid=${APIKey}`;
+
+    fetch(apiUrl) 
+        .then(function (res) {
+            return res.json
+        })
+        .then(function (data) {
+            if (!data[0]) {
+                alert('Federation City Not Found')
             } else {
-                let { lat, lon } = data[0];
-                console.log(`📍 Coordinates found: Latitude = ${lat}, Longitude = ${lon}.`);
-
-                const weatherApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`;
-                // console.log(`🌦️ Weather API URL: ${weatherApiUrl}`);
-
-                fetch(weatherApiUrl)
-                .then(function (res) {
-                    // console.log('Weather response received', res);
-                    return res.json();
-                })
-                .then(function(weather){
-                    //  function to render current weather card
-                    // function to update search history (...?)
-                    console.log('Weather handling complete', weather);
-                })
-                .catch(function(err){
-                    console.error('Error fetching weather', err);
-                })
+                fetchWeatherData(data[0]);
             }
         })
-        .catch(function(err){
-            console.error('Error fetching geocode data.', err);
-        })
+        .catch(function (err) {
+            console.error(err)
+        });
 }
 
-
-
-function fetchWeatherData(location, onSuccess) {
-    const { lat, lon, name: city } = location; 
-    const coordinateSearchURL = `${rootAPIUrl}/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`;
-    // console.log('Weather for:' + city);
-    // console.log('Lat:' + lat);
-    // console.log('Lon:' + lon);
-    // console.log('API URL', coordinateSearchURL);
-
-    fetch(coordinateSearchURL)
-        .then((res) => {
-            // console.log('Raw response received', res);
-            return res.json();
-        })
-        .then((weatherData) => {
-            // console.log('Parsed weather:', weatherData);
-            onSuccess(city, weatherData);
-        })
-        
-        .catch((err) => {
-            console.error('Error fetching:', err);
-        })
+function handleSearchFormSubmit(e) {
+    if (!searchInput.value)  {
+        return;
+    }
+    e.preventDefault();
+    let search = searchInput.value.trim();
+    fetchCoordinates(search);
+    searchInput.value = ' ';
 }
 
-function handleWeatherData(cityName, weatherData) {
-    console.log("Weather data for:", cityName);
-    console.log(weatherData);
-}
-
-// fetchWeatherData(exampleLocation.name, handleWeatherData);
 document.addEventListener('DOMContentLoaded', function () {
     renderAnalogCities();
 });
+searchForm.addEventListener('submit', handleSearchFormSubmit);
 
+
+// const exampleLocation = {
+//     lat: 40.7128,        // Latitude of New York City
+//     lon: -74.0060,       // Longitude of New York City
+//     name: 'New York'     // City name
+//   };
   
+// function fetchWeather(searchValue) {
+//     console.log(`🔍 Starting weather data fetch for: ${searchValue}`);
+
+//     let geoCodeURL = `https://api.openweathermap.org/geo/1.0/direct?q=${searchValue}&limit=5&appid=${APIKey}`;
+//     console.log(`🌐 Geocode API URL: ${geoCodeURL}`);
+
+
+//     fetch(geoCodeURL)
+//         .then(function (res) {
+//             console.log('📡 Geocode response received:', res);
+//             return res.json();
+//         })
+//         .then(function (data) {
+//             console.log('📦 Parsed geocode data', data);
+
+//             if(!data[0]){
+//                 console.error('Location not found.');
+//                 return;
+//             } else {
+//                 let { lat, lon } = data[0];
+//                 console.log(`📍 Coordinates found: Latitude = ${lat}, Longitude = ${lon}.`);
+
+            //     const weatherApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`;
+            //     // console.log(`🌦️ Weather API URL: ${weatherApiUrl}`);
+
+            //     fetch(weatherApiUrl)
+            //     .then(function (res) {
+            //         // console.log('Weather response received', res);
+            //         return res.json();
+            //     })
+            //     .then(function(weather){
+            //         //  function to render current weather card
+            //         // function to update search history (...?)
+            //         console.log('Weather handling complete', weather);
+            //     })
+            //     .catch(function(err){
+            //         console.error('Error fetching weather', err);
+            //     })
+            // }
+//         })
+//         .catch(function(err){
+//             console.error('Error fetching geocode data.', err);
+//         })
+// }
 
 
 
+// function fetchWeatherData(location, onSuccess) {
+//     const { lat, lon, name: city } = location; 
+//     const coordinateSearchURL = `${rootAPIUrl}/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`;
+//     // console.log('Weather for:' + city);
+//     // console.log('Lat:' + lat);
+//     // console.log('Lon:' + lon);
+//     // console.log('API URL', coordinateSearchURL);
 
-// FUNCTION fetch coordinates from search string
-//     MAKE geocoding API call with search
-//     ON success:
-//         IF location found
-//             ADD to history
-//             FETCH weather for location
-//             RENDER results
-//         ELSE
-//             SHOW "Location not found" alert
-//     ON failure:
-//         LOG error
+//     fetch(coordinateSearchURL)
+//         .then((res) => {
+//             // console.log('Raw response received', res);
+//             return res.json();
+//         })
+//         .then((weatherData) => {
+//             // console.log('Parsed weather:', weatherData);
+//             onSuccess(city, weatherData);
+//         })
+        
+//         .catch((err) => {
+//             console.error('Error fetching:', err);
+//         })
+// }
 
-// // ========== Event Handlers ==========
-// FUNCTION on search form submit
-//     PREVENT default form behavior
-//     GET search value
-//     IF empty, STOP
-//     FETCH coordinates
-//     CLEAR input
+// function handleWeatherData(cityName, weatherData) {
+//     console.log("Weather data for:", cityName);
+//     console.log(weatherData);
+// }
 
-// FUNCTION on history button click
-//     IF clicked target is a history button
-//         GET search term from button
-//         FETCH coordinates
+// fetchWeatherData(exampleLocation.name, handleWeatherData);
 
-// // ========== App Initialization ==========
-// FUNCTION start app
-//     SETUP date/time
-//     GET DOM references
-//     INITIALIZE history
-//     LISTEN for form submit → handleSearchSubmit
-//     LISTEN for history button click → handleHistoryClick
-
-// CALL start app
 
 
 
