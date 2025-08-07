@@ -106,13 +106,13 @@ function fetchAnalogWeather(location) {
     .catch(function(err) {
         console.error('Error:', city, err);
     })
-    
-        
 }
 
 function createAnalogWeatherRow(abbreviation, weatherData, pollutionData) {
     const analogContainer = document.querySelector('#analog-forecast');
     analogContainer.setAttribute('class', 'm-0');
+
+    // if (!weatherData.list || weatherData.list.length) return;
 
     let sky = weatherData.list[0].weather[0].main;
     let temp = weatherData.list[0].main.temp;
@@ -175,7 +175,9 @@ function renderAnalogWeatherHeader() {
         headerRow.append(col);
     }
 
-    analogHeaderContainer.append(headerRow);
+    // analogHeaderContainer.append(headerRow);
+    document.querySelector('#analog-forecast').prepend(analogHeaderContainer);
+
 }
 
 async function renderAnalogCities() {
@@ -186,19 +188,20 @@ async function renderAnalogCities() {
     }
 }
 
-function renderTodayWeatherCard(weatherData) {
+function renderTodayWeatherCard(city, weatherData, pollutionData) {
     todayCard.innerHTML = ' ';
     if(!weatherData) {
         console.error('Weather data is missing or invalid.');
         return;
     }
     
-    let todayDate = dayjs();
+    let todayDate = dayjs().format('M/D/YYYY');
     let currentStarDate = getStardate(todayDate);
     console.log(currentStarDate);
 
     const card = document.createElement('div');
-    card.className = 'card';
+    card.setAttribute('class','card text-white');
+
     const cardBody = document.createElement('div'); 
     cardBody.className = 'card-body';
     card.append(cardBody);
@@ -209,7 +212,7 @@ function renderTodayWeatherCard(weatherData) {
 
     const sky = document.createElement('p');
     sky.classList = 'card-text';
-    sky.textContent = `${weatherData.list[0].weather[0].main}`;
+    sky.textContent = `Sky: ${weatherData.list[0].weather[0].main}`;
 
     const temp = document.createElement('p');
     temp.classList = 'card-text';
@@ -217,11 +220,11 @@ function renderTodayWeatherCard(weatherData) {
 
     const humidity = document.createElement('p');
     humidity.classList = 'card-text';
-    humidity.classList = `${weatherData.list[0].main.humidity}%`;
+    humidity.textContent = `Humidity: ${weatherData.list[0].main.humidity}%`;
 
     const wind = document.createElement('p');
     wind.classList = 'card-text';
-    wind.textContent = `Wind: ${wind} MPH`;
+    wind.textContent = `Wind: ${weatherData.list[0].wind.speed} MPH`;
 
     const aqi = document.createElement('p');
     aqi.classList = 'card-text';
@@ -234,25 +237,114 @@ function renderTodayWeatherCard(weatherData) {
 
 }
 
-function renderAllCards(city, data) {
-    renderTodayWeatherCard(city, data.list[0], data.city.timezone);
+function renderFutureWeatherCard(forecast, pollutionData) {
+    let sky = forecast.weather[0].main;
+    let temp = forecast.main.temp;
+    let humidity = forecast.main.humidity;
+    let wind = forecast.wind.speed;
+    let aqi = pollutionData.list[0].main.aqi;
+
+    const col = document.createElement('div');
+    col.setAttribute('class', 'col-md');
+    col.classList.add('five-day-card');
+
+    const card = document.createElement('div');
+    card.setAttribute('class', 'card bg-primary h-100 text-white');
+
+    const cardBody = document.createElement('div');
+    cardBody.setAttribute('class', 'card-body p-2');
+
+    const cardTitle = document.createElement('h5');
+    cardTitle.setAttribute('class', 'card-title');
+    cardTitle.textContent = dayjs(forecast.dt_txt).format('M/D/YYYY');
+
+    const starDateEl = document.createElement('h6');
+    starDateEl.setAttribute('class', 'card-title');
+    starDateEl.textContent = `Stardate: ${getStardate()}`;
+
+    const skyEl = document.createElement('p');
+    skyEl.setAttribute('class', 'card-text');
+    skyEl.textContent = `Sky: ${sky}`;
+
+    const tempEl = document.createElement('p');
+    tempEl.setAttribute('class', 'card-text');
+    tempEl.textContent = `Temp: ${temp} °F`;
+
+    const humEl = document.createElement('p');
+    humEl.setAttribute('class', 'card-text');
+    humEl.textContent = `Humidity: ${humidity} %`;
+
+    const windEl = document.createElement('p');
+    windEl.setAttribute('class', 'card-text');
+    windEl.textContent = `Wind: ${wind} MPH`;
+
+    const aqiEl = document.createElement('p');
+    aqiEl.setAttribute('class', 'card-text');
+    aqiEl.textContent = `AQI: ${aqi}`;
+
+    col.append(card);
+    card.append(cardBody);
+    cardBody.append(cardTitle, starDateEl, skyEl, tempEl, humEl, windEl, aqiEl);
+
+    futureCards.append(col);
+}
+
+function renderForecastSection(dailyForecast, pollutionData) {
+    let startDate = dayjs().add(1, 'day').startOf('day').unix();
+    let endDate = dayjs().add(6, 'day').startOf('day').unix();
+
+    let headingCol = document.createElement('div');
+    headingCol.setAttribute('class', 'col-12 text-white');
+
+    let heading = document.createElement('h4');
+    heading.textContent = '5-Day Federation Forecast';
+
+    headingCol.append(heading);
+
+    futureCards.innerHTML = '';
+    futureCards.append(headingCol);
+
+    for (let i = 0; i < dailyForecast.length; i++) {
+        const forecast = dailyForecast[i];
+        if (forecast.dt >= startDate && forecast.dt < endDate) {
+            if (forecast.dt_txt.slice(11, 13) === "12") {
+                renderFutureWeatherCard(forecast, pollutionData);
+            }
+        }
+    }
+
+
+}
+
+function renderAllCards(city, weatherData, pollutionData) {
+    renderTodayWeatherCard(city, weatherData, pollutionData);
+    renderForecastSection(weatherData.list, pollutionData);
 }
 
 function fetchWeatherData(location) {
-    const { lat, lon} = location; 
-    const city = location.name;
+    let { lat, lon } = location; 
+    let city = location.name;
 
-    var weatherAPI = `${weatherApiRootUrl}/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`;
+    const weatherAPI = `${rootAPIUrl}/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`;
+    const pollutionApiUrl = `${rootAPIUrl}/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${APIKey}`;
 
-    fetch(weatherAPI)
-        .then(function (res) {
-            return res.json
+        return Promise.all([
+            fetch(weatherAPI)
+                .then(function (res) {
+                    return res.json();
+                }),
+            fetch(pollutionApiUrl)
+                .then(function (res) {
+                    return res.json();
+                })
+        ])
+        .then(function(res) {
+            let weatherData = res[0];
+            let pollutionData = res[1];
+            renderAllCards(city, weatherData, pollutionData);
         })
-        .then(function (data) {
-            renderItems(city, data);
-        })
-        .catch(function (err) {
-            console.error(err)
+        .catch(function(err) {
+            console.error('Error:', city, err);
         })
 }
 
@@ -262,7 +354,7 @@ function fetchCoordinates(search) {
 
     fetch(apiUrl) 
         .then(function (res) {
-            return res.json
+            return res.json();
         })
         .then(function (data) {
             if (!data[0]) {
@@ -283,7 +375,7 @@ function handleSearchFormSubmit(e) {
     e.preventDefault();
     let search = searchInput.value.trim();
     fetchCoordinates(search);
-    searchInput.value = ' ';
+    searchInput.value = '';
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -292,88 +384,12 @@ document.addEventListener('DOMContentLoaded', function () {
 searchForm.addEventListener('submit', handleSearchFormSubmit);
 
 
-// const exampleLocation = {
-//     lat: 40.7128,        // Latitude of New York City
-//     lon: -74.0060,       // Longitude of New York City
-//     name: 'New York'     // City name
-//   };
-  
-// function fetchWeather(searchValue) {
-//     console.log(`🔍 Starting weather data fetch for: ${searchValue}`);
-
-//     let geoCodeURL = `https://api.openweathermap.org/geo/1.0/direct?q=${searchValue}&limit=5&appid=${APIKey}`;
-//     console.log(`🌐 Geocode API URL: ${geoCodeURL}`);
-
-
-//     fetch(geoCodeURL)
-//         .then(function (res) {
-//             console.log('📡 Geocode response received:', res);
-//             return res.json();
-//         })
-//         .then(function (data) {
-//             console.log('📦 Parsed geocode data', data);
-
-//             if(!data[0]){
-//                 console.error('Location not found.');
-//                 return;
-//             } else {
-//                 let { lat, lon } = data[0];
-//                 console.log(`📍 Coordinates found: Latitude = ${lat}, Longitude = ${lon}.`);
-
-            //     const weatherApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`;
-            //     // console.log(`🌦️ Weather API URL: ${weatherApiUrl}`);
-
-            //     fetch(weatherApiUrl)
-            //     .then(function (res) {
-            //         // console.log('Weather response received', res);
-            //         return res.json();
-            //     })
-            //     .then(function(weather){
-            //         //  function to render current weather card
-            //         // function to update search history (...?)
-            //         console.log('Weather handling complete', weather);
-            //     })
-            //     .catch(function(err){
-            //         console.error('Error fetching weather', err);
-            //     })
-            // }
-//         })
-//         .catch(function(err){
-//             console.error('Error fetching geocode data.', err);
-//         })
-// }
 
 
 
-// function fetchWeatherData(location, onSuccess) {
-//     const { lat, lon, name: city } = location; 
-//     const coordinateSearchURL = `${rootAPIUrl}/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`;
-//     // console.log('Weather for:' + city);
-//     // console.log('Lat:' + lat);
-//     // console.log('Lon:' + lon);
-//     // console.log('API URL', coordinateSearchURL);
 
-//     fetch(coordinateSearchURL)
-//         .then((res) => {
-//             // console.log('Raw response received', res);
-//             return res.json();
-//         })
-//         .then((weatherData) => {
-//             // console.log('Parsed weather:', weatherData);
-//             onSuccess(city, weatherData);
-//         })
-        
-//         .catch((err) => {
-//             console.error('Error fetching:', err);
-//         })
-// }
 
-// function handleWeatherData(cityName, weatherData) {
-//     console.log("Weather data for:", cityName);
-//     console.log(weatherData);
-// }
 
-// fetchWeatherData(exampleLocation.name, handleWeatherData);
 
 
 
