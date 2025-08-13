@@ -200,13 +200,19 @@ function renderTodayWeatherCard(city, weatherData, pollutionData) {
     console.log(currentStarDate);
 
     const card = document.createElement('div');
-    card.setAttribute('class','card text-white');
-
+    // card.setAttribute('class','current-card');
+    // card.classList.add('current-card');
+    card.className = 'current-card';
+    
     const cardBody = document.createElement('div'); 
-    cardBody.className = 'card-body';
-    card.append(cardBody);
+    // cardBody.setAttribute('class', 'current-card-body card-body rounded-3');
+    // cardBody.className = 'card-body';
+    // cardBody.classList.add('current-card-body');
+    cardBody.className = 'current-card-body';
+    
 
-    const cardHeading = document.createElement('h2');
+
+    const cardHeading = document.createElement('h1');
     cardHeading.className = 'h3 card-heading';
     cardHeading.textContent = `${city} ${todayDate} Stardate: ${currentStarDate}`;
 
@@ -233,7 +239,7 @@ function renderTodayWeatherCard(city, weatherData, pollutionData) {
     cardBody.append(cardHeading, sky, temp, humidity, wind, aqi);
     card.append(cardBody);
     
-    todayCard.append(card);
+    todayCard.appendChild(card);
 
 }
 
@@ -249,16 +255,17 @@ function renderFutureWeatherCard(forecast, pollutionData) {
     col.classList.add('five-day-card');
 
     const card = document.createElement('div');
-    card.setAttribute('class', 'card bg-primary h-100 text-white');
+    card.setAttribute('class', 'h-100');
 
     const cardBody = document.createElement('div');
-    cardBody.setAttribute('class', 'card-body p-2');
+    cardBody.setAttribute('class', 'card-body p-3 text-center');
+    cardBody.classList.add('five-day-cardBody');
 
-    const cardTitle = document.createElement('h5');
+    const cardTitle = document.createElement('h3');
     cardTitle.setAttribute('class', 'card-title');
     cardTitle.textContent = dayjs(forecast.dt_txt).format('M/D/YYYY');
 
-    const starDateEl = document.createElement('h6');
+    const starDateEl = document.createElement('h4');
     starDateEl.setAttribute('class', 'card-title');
     starDateEl.textContent = `Stardate: ${getStardate()}`;
 

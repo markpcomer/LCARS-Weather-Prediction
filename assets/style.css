@@ -470,3 +470,50 @@ li {
 #search-button {
     color: var(--lcars-orange);
 }
+
+.current-card {
+    color: var(--lcars-orange);
+    /* border-top-width: 22px;
+    border-bottom-width: 22px;
+    border-left-width: 190px;
+    border-right-width: 190px; */
+    border-left: solid 90px var(--lcars-orange);
+    border-top: solid 22px var(--lcars-orange);
+    border-right: solid 90px var(--lcars-orange);
+    border-bottom: solid 22px var(--lcars-orange);
+    background-color: var(--lcars-orange);
+    border-radius: 90px;
+    overflow: hidden;
+
+    /* outline: 3px dashed limegreen; */
+
+}
+
+.current-card-body{
+    border-radius: 50px;
+    border: 15px solid black;
+
+    background-color: black;
+    padding: 20px;
+
+    /* outline: 3px dashed red; */
+
+
+}
+
+.five-day-card {
+    border: 15px solid var(--lcars-red);
+    border-radius: 25px;
+    background-color: black;
+    
+    margin: 5px;
+}
+
+.five-day-cardBody {
+    color: var(--lcars-light-blue);
+    border: 5px solid black;
+}
+
+
+
+
