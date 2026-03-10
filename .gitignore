@@ -1,0 +1,24 @@
+# Audio & video assets
+*.mp3
+*.wav
+*.ogg
+*.mp4
+
+# Asset folders
+assets/
+.assets/
+
+# Mac File Systems
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code settings
+.vscode/
+
+# Node
+node_modules/
+package-lock.json 
+
+# Environment variables
+.env
