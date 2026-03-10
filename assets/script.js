@@ -9,6 +9,12 @@ const searchHistoryEl = document.querySelector('#history');
 const todayCard = document.querySelector('#today-card');
 const futureCards = document.querySelector('#future-cards');
 
+const cpuBeep = document.getElementById('cpu-beep');
+
+
+
+const buttons = document.getElementById('search-button');
+
 const styleTag = document.createElement('style');
 styleTag.innerHTML = `
     @keyframes colorchange {
@@ -31,7 +37,7 @@ styleTag.innerHTML = `
         100% { color: #f5f6fa;}
     }
 
-    @keyframes alert-danger {
+    @keyframes danger-colorchange {
         0% {color: red;}
         25% {color: red;}
         50% {color: red;}
@@ -67,7 +73,7 @@ function getStardate() {
 const analogWeatherCities = [
     {city: 'San Francisco', abbreviation: 'SF', lat: 37.7749, lon: -122.4194},
     {city: 'Tokyo', abbreviation: 'TYO', lat: 35.6897, lon: 139.6922},
-    {city: 'Dehli', abbreviation: 'DL', lat: 28.6139, lon: 77.2089},
+    {city: 'Delhi', abbreviation: 'DL', lat: 28.6139, lon: 77.2089},
     {city: 'Shanghai', abbreviation: 'HU', lat: 31.2286, lon: 121.4747},
     {city: 'Dhaka', abbreviation: 'DAC', lat: 23.8042, lon: 90.4153},
     {city: 'Cairo', abbreviation: 'Cairo', lat: 30.0444, lon: 31.2358},
@@ -357,7 +363,7 @@ function fetchWeatherData(location) {
 
 
 function fetchCoordinates(search) {
-    var apiUrl = `${rootAPIUrl}/geo/1.0/direct?q=${search}&limit=5&appid=${APIKey}`;
+    const apiUrl = `${rootAPIUrl}/geo/1.0/direct?q=${search}&limit=5&appid=${APIKey}`;
 
     fetch(apiUrl) 
         .then(function (res) {
@@ -375,6 +381,8 @@ function fetchCoordinates(search) {
         });
 }
 
+
+
 function handleSearchFormSubmit(e) {
     if (!searchInput.value)  {
         return;
@@ -385,9 +393,28 @@ function handleSearchFormSubmit(e) {
     searchInput.value = '';
 }
 
+searchButton.addEventListener('click', () => {
+    if (typeof cpuBeep !== 'undefined') {
+        cpuBeep.play();
+    }
+});
+
+document.addEventListener('click', function playOnFirstInteraction() {
+    const bridgeAmbience = document.getElementById('bridge-ambience');
+    if (!bridgeAmbience) {
+        console.log('Audio element not found — check the id in your HTML');
+        return;
+    }
+    bridgeAmbience.volume = 1.0;
+    bridgeAmbience.play();
+
+    
+});
+
 document.addEventListener('DOMContentLoaded', function () {
     renderAnalogCities();
-});
+})
+
 searchForm.addEventListener('submit', handleSearchFormSubmit);
 
 
